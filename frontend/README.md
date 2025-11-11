@@ -94,14 +94,6 @@ Start the development server
 
 https://youtu.be/celR6rwV5z8
 
-## Deployment
-
-https://dialecto-nine.vercel.app/
-#### 🚀 Made by Team NetCrawlers
-- [Chaitya Shah](https://github.com/CShah44)
-- [Krish Patel](https://github.com/kodercrish)
-- [Krishna Sai](https://github.com/melohub-xbit)
-- 
 
 ### Note
 
