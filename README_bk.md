@@ -1,12 +1,9 @@
-# Dialecto - Language Learning App
+# LangStar - Language Learning App
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
 [![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![Gemini](https://img.shields.io/badge/Gemini_AI-8E75B2?style=for-the-badge&logo=google&logoColor=white)](https://gemini.google.com/)
-[![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)](https://dialecto.onrender.com)
-[![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)](https://dialecto-nine.vercel.app/)
-[![Documentation](https://img.shields.io/badge/docs-API_Documentation-blue?style=for-the-badge)](https://dialecto.onrender.com/docs)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](https://makeapullrequest.com)
 
 A robust backend for a pixel art themed language learning app, enabling seamless user interaction, progress tracking, and data management. Built with FastAPI, and integrated with MongoDB database (via pymongo) support for storing user progress, leaderboard, and language content.
@@ -15,7 +12,7 @@ A robust backend for a pixel art themed language learning app, enabling seamless
 
 The project is structured as follows:
 ```
-DIALECTO-BK/
+LangStar-BK/
 ├── basemodels/
 │   └── allpydmodels.py
 ├── endpoints/
@@ -51,7 +48,7 @@ DIALECTO-BK/
 
 ## Features
 
-Dialecto offers a variety of features to help users learn new languages:
+LangStar offers a variety of features to help users learn new languages:
 
 - **Gamified Learning:**
     - **Leaderboards:** Track user progress and compete with others.

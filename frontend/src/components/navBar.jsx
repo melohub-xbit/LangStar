@@ -18,7 +18,7 @@ function NavBar() {
             <div className="flex items-end gap-2 md:gap-5">
               <Link to="/home">
                 <h1 className="text-[#e8f0e5] font-medium text-3xl md:text-5xl">
-                  Dialecto
+                  LangStar
                 </h1>
               </Link>
               <div className="text-[#e8f0e5] font-small text-md md:text-xl">

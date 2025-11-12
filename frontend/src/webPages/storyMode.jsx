@@ -18,7 +18,7 @@ function StoryMode() {
   const incrementScore = async () => {
     try {
       const response = await fetch(
-        "https://dialecto.onrender.com/updatescore",
+        `${import.meta.env.VITE_API_URL}/updatescore`,
         {
           method: "POST",
           headers: {
@@ -53,7 +53,7 @@ function StoryMode() {
       setStoryPart(null);
       setTranscript("");
 
-      const res = await fetch("https://dialecto.onrender.com/storynarrate", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/storynarrate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -128,7 +128,7 @@ function StoryMode() {
     async (retryCount = 3) => {
       try {
         setLoading(true);
-        const res = await fetch(`https://dialecto.onrender.com/storystart`, {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/storystart`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

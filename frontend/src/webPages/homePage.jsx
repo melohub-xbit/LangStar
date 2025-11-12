@@ -12,7 +12,7 @@ function HomePage() {
 
   useEffect(() => {
     setInterval(() => {
-      fetch("https://dialecto.onrender.com/health").then((response) =>
+      fetch(`${import.meta.env.VITE_API_URL}/health`).then((response) =>
         response.json()
       );
     }, 100000);
@@ -20,7 +20,7 @@ function HomePage() {
 
   useEffect(() => {
     const getLeaderboard = async () => {
-      const res = await fetch("https://dialecto.onrender.com/leaderboard", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/leaderboard`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,7 +51,7 @@ function HomePage() {
             <div className="bg-blue-900/70 backdrop-blur-md text-white rounded-lg p-6 md:h-[300px] w-full flex flex-col justify-center">
               <div className="flex flex-col gap-4">
                 <h1 className="text-3xl md:text-6xl font-medium">
-                  Welcome to Dialecto, {user.username}
+                  Welcome to LangStar, {user.username}
                 </h1>
                 <div className="flex flex-col md:flex-row md:space-x-2 items-start md:items-center gap-2">
                   <span className="text-lg">

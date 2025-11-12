@@ -64,7 +64,7 @@ function Pixey() {
     try {
       setIsLoading(true);
       const response = await fetch(
-        "https://dialecto.onrender.com/tongue_twisters",
+        `${import.meta.env.VITE_API_URL}/tongue_twisters`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -103,7 +103,7 @@ function Pixey() {
     try {
       setIsLoading(true);
       const response = await fetch(
-        "https://dialecto.onrender.com/language_teacher",
+        `${import.meta.env.VITE_API_URL}/language_teacher`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -134,7 +134,7 @@ function Pixey() {
     try {
       setIsLoading(true);
       const response = await fetch(
-        "https://dialecto.onrender.com/speech_analysis",
+        `${import.meta.env.VITE_API_URL}/speech_analysis`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

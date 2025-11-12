@@ -17,7 +17,7 @@ function DailyLearning() {
       try {
         // console.log("Fetching cards...");
         toast("Fetching cards...");
-        const res = await fetch("https://dialecto.onrender.com/dailies", {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/dailies`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -66,7 +66,7 @@ function DailyLearning() {
 
     try {
       const response = await fetch(
-        "https://dialecto.onrender.com/updatescore",
+        `${import.meta.env.VITE_API_URL}/updatescore`,
         {
           method: "POST",
           headers: {

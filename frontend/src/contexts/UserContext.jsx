@@ -26,7 +26,7 @@ export const UserProvider = ({ children }) => {
   }, [language]);
 
   const login = async (username, password) => {
-    const res = await fetch("https://dialecto.onrender.com/login", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -50,7 +50,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    const res = await fetch("https://dialecto.onrender.com/logout", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const signup = async (username, password) => {
-    const res = await fetch("https://dialecto.onrender.com/register", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -117,7 +117,7 @@ export const UserProvider = ({ children }) => {
 
   const refreshUserData = async () => {
     try {
-      const response = await fetch("https://dialecto.onrender.com/getscores", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/getscores`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

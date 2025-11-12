@@ -55,7 +55,7 @@ const MemoryGame = () => {
   const fetchAndInitializeGame = async (retryCount = 3) => {
     try {
       setLoading(true);
-      const res = await fetch("https://dialecto.onrender.com/memorypairs", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/memorypairs`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -188,7 +188,7 @@ const MemoryGame = () => {
   const incrementScore = async () => {
     try {
       const response = await fetch(
-        "https://dialecto.onrender.com/updatescore",
+        `${import.meta.env.VITE_API_URL}/updatescore`,
         {
           method: "POST",
           headers: {

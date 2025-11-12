@@ -1,11 +1,11 @@
-# Dialecto
+# LangStar
 
 > A pixel art themed language learning app with engaging interactive features, built with React, Tailwind CSS, and Sarvam API for text-to-speech translation.
 
 
 
 ## About the Project
-**Dialecto** is a language learning platform designed with a pixel art aesthetic, aimed at making language acquisition fun and interactive. This project was developed using **React** and **Tailwind CSS**, leveraging **Sarvam API** for text-to-speech translation, and **Framer Motion** for smooth animations. Dialecto provides a variety of features, including story mode exercises, pronunciation checks, a memory game, and progress tracking, all while adapting to the user's chosen language.
+**LangStar** is a language learning platform designed with a pixel art aesthetic, aimed at making language acquisition fun and interactive. This project was developed using **React** and **Tailwind CSS**, leveraging **Sarvam API** for text-to-speech translation, and **Framer Motion** for smooth animations. LangStar provides a variety of features, including story mode exercises, pronunciation checks, a memory game, and progress tracking, all while adapting to the user's chosen language.
 
 ## Badges
 
@@ -46,7 +46,7 @@ The website theme changes based on the selected language, creating an immersive 
  Supports login and signup for personalized access to progress, scores, and settings.
 
 8. **About Us Page**:
-Information about the creators, purpose, and technology behind Dialecto.
+Information about the creators, purpose, and technology behind LangStar.
 
 ## Tech Stack
 - **Frontend**: React, Tailwind CSS
@@ -60,12 +60,12 @@ Information about the creators, purpose, and technology behind Dialecto.
 ### Installation
 Clone the repository:
    ```bash
-   git clone https://github.com/CShah44/Dialecto.git
+   git clone https://github.com/melohub-xbit/SE_Project_Alps.git
    ```
 Go to the project directory
 
 ```bash
-  cd Dialecto
+  cd LangStar
 ```
 Make the .env file with following environment variables
 

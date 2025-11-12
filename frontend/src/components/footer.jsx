@@ -10,7 +10,7 @@ function Footer() {
             href="/"
           >
             <span className="__className_37c115 text-[#e8f0e5] self-center text-4xl whitespace-nowrap ">
-              Dialecto
+              LangStar
             </span>
           </Link>
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-[#e8f0e5] sm:mb-0">
@@ -30,7 +30,7 @@ function Footer() {
         <span className="block text-sm text-[#e8f0e5] sm:text-center">
           © 2024{" "}
           <a className="hover:underline me-4 md:me-6" href="/">
-            Dialecto™
+            LangStar™
           </a>
           All Rights Reserved
         </span>
