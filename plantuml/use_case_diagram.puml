@@ -1,0 +1,47 @@
+@startuml Use Case Diagram
+left to right direction
+skinparam packageStyle rectangle
+
+actor "User" as User
+actor "System" as System
+
+rectangle "LangStar Language Learning App" {
+    usecase "Sign Up" as UC1
+    usecase "Sign In" as UC2
+    usecase "View Home Page" as UC3
+    usecase "View About Us" as UC4
+    usecase "Daily Learning" as UC5
+    usecase "Play Memory Game" as UC6
+    usecase "Story Mode" as UC7
+    usecase "Pixey Features" as UC8
+    usecase "View Leaderboard" as UC9
+    usecase "Track Progress" as UC10
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5 : "Learn new words daily"
+User --> UC6 : "Match word pairs"
+User --> UC7 : "Read and pronounce stories"
+User --> UC8 : "Tongue twister, Chatbot, Grammar buddy"
+User --> UC9 : "View rankings"
+User --> UC10 : "Personal progress"
+
+UC1 ..> System : "Register user"
+UC2 ..> System : "Authenticate user"
+UC5 ..> System : "Fetch daily words"
+UC6 ..> System : "Validate matches"
+UC7 ..> System : "Generate stories, evaluate pronunciation"
+UC8 ..> System : "Generate content, evaluate speech"
+UC9 ..> System : "Retrieve scores"
+UC10 ..> System : "Save/update progress"
+
+note right of UC8
+    Pixey includes:
+    - Tongue Twister
+    - Chatbot
+    - Grammar Buddy
+end note
+@enduml

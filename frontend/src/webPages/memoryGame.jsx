@@ -9,17 +9,15 @@ const Card = ({ word, pronunciation, isFlipped, isMatched, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className={`aspect-square cursor-pointer perspective-1000 relative transform-style-preserve-3d transition-transform duration-500 ${
-        isFlipped ? "rotate-y-180" : ""
-      }`}
+      className={`aspect-square cursor-pointer perspective-1000 relative transform-style-preserve-3d transition-transform duration-500 ${isFlipped ? "rotate-y-180" : ""
+        }`}
     >
       <div className="absolute w-full h-full backface-hidden rounded-lg shadow-lg bg-blue-900/70 hover:bg-blue-900/80 hover:scale-105 backdrop-blur-md transition-colors"></div>
       <div
-        className={`absolute w-full h-full backface-hidden rotate-y-180 rounded-lg flex flex-col items-center justify-center p-2 text-center shadow-lg ${
-          isMatched
-            ? "bg-green-500/95 text-white"
-            : "bg-white/60 backdrop-blur-md text-black"
-        }`}
+        className={`absolute w-full h-full backface-hidden rotate-y-180 rounded-lg flex flex-col items-center justify-center p-2 text-center shadow-lg ${isMatched
+          ? "bg-green-500/95 text-white"
+          : "bg-white/60 backdrop-blur-md text-black"
+          }`}
       >
         <span className="text-base sm:text-lg md:text-2xl font-medium mb-2">
           {word}
@@ -98,10 +96,8 @@ const MemoryGame = () => {
         }
       }
 
-      console.log(newCards);
-      const shuffledWords = [...newCards].sort(() => Math.random() - 0.5);
-      console.log(shuffledWords);
 
+      const shuffledWords = [...newCards].sort(() => Math.random() - 0.5);
       setCards(shuffledWords);
       setFlippedCards([]);
       setMatchedPairs(0);

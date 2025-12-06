@@ -3,6 +3,7 @@ from basemodels.allpydmodels import *
 from utils.all_helper import *
 from utils.story_helper import *
 from database import *
+import traceback
 
 router = APIRouter()
 
@@ -81,8 +82,10 @@ async def start_story(info_dict: StoryStart):
     level = determine_user_level(user_points)
     try:
         return await generate_and_start_story(user_id, language, level)
-    except:
-        print("Error generating story")
+    except Exception as e:
+        print(f"Error generating story: {e}")
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail="Error generating story")
 
 @router.post("/storynarrate")
 async def submit_narration(info_dict: StoryNarrate):

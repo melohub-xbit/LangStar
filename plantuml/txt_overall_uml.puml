@@ -1,0 +1,177 @@
+@startuml
+' Compact overall application UML
+' Feature-focused, high-level overview (not implementation details)
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+
+package "Frontend" {
+  class App {
+    +render()
+    +handleRouteChange()
+  }
+  class Layout {
+    +render()
+    +handleNavigation()
+  }
+  class NavBar {
+    +render()
+    +toggleMenu()
+  }
+  class Footer {
+    +render()
+  }
+  class PronounceButton {
+    +render()
+    +handlePronounce()
+    +playAudio()
+  }
+  class ProtectedRoute {
+    +render()
+    +checkAuthentication()
+  }
+
+  package "Pages" {
+    class HomePage {
+      +render()
+      +loadUserProgress()
+    }
+    class DailyLearning {
+      +render()
+      +loadDailies()
+      +handlePronounce()
+    }
+    class MemoryGame {
+      +render()
+      +loadMemoryPairs()
+      +handleCardClick()
+      +checkMatch()
+    }
+    class Pixey {
+      +render()
+      +handleTongueTwister()
+      +handleChat()
+      +handleGrammarCheck()
+    }
+    class StoryMode {
+      +render()
+      +startStory()
+      +submitNarration()
+      +playNextPart()
+    }
+    class SignIn {
+      +render()
+      +handleLogin()
+      +validateForm()
+    }
+    class SignUp {
+      +render()
+      +handleRegister()
+      +validateForm()
+    }
+  }
+
+  App --> Layout
+  Layout *-- NavBar
+  Layout *-- Footer
+  Layout --> HomePage
+  Layout --> DailyLearning
+  Layout --> MemoryGame
+  Layout --> Pixey
+  Layout --> StoryMode
+  Layout --> SignIn
+  Layout --> SignUp
+}
+
+package "API / Backend" {
+  class AuthRouter {
+    +login(user_data: UserLogin)
+    +register(user_data: UserRegister)
+  }
+  class GamesRouter {
+    +leaderboard(info_dict: InfoDict)
+    +updatescore(info_dict: ScoreDict)
+    +getscores(info_dict: InfoDict)
+    +storystart(info_dict: StoryStart)
+    +storynarrate(info_dict: StoryNarrate)
+  }
+  class GamesWordRouter {
+    +dailies(info_dict: InfoDict)
+    +memorypairs(info_dict: InfoDict)
+    +language_teacher(info_dict: LanguageTeaching)
+  }
+
+  package "Services" {
+  class AuthService {
+    +verify_credentials(username, password)
+    +create_access_token(data)
+    +hash_password(password)
+  }
+  class LanguageService {
+    +generate_dailies(language, level)
+    +generate_memory_pairs(language, level)
+    +language_teaching_chat(language, query)
+    +evaluate_pronunciation(original_text, user_narration)
+  }
+  class StoryService {
+    +generate_and_start_story(user_id, language, level)
+    +save_part_narration(user_id, transcription)
+    +evaluate_user_narration(original_text, user_narration, language)
+    +generate_final_feedback(story)
+  }
+  }
+
+  AuthRouter --> AuthService
+  GamesRouter --> LanguageService
+  GamesWordRouter --> LanguageService
+  GamesRouter --> StoryService
+}
+
+package "Data & External" {
+  class MongoDB {
+    +find_one(query)
+    +insert_one(document)
+    +update_one(query, update)
+    +aggregate(pipeline)
+    +delete_many(query)
+  }
+  class Schemas {
+    +UserLogin
+    +UserRegister
+    +InfoDict
+    +ScoreDict
+    +StoryStart
+    +StoryNarrate
+    +LanguageTeaching
+  }
+  class GenModel {
+    +generate_content(prompt)
+  }
+
+  AuthService --> MongoDB
+  LanguageService --> MongoDB
+  StoryService --> MongoDB
+  LanguageService --> GenModel
+  StoryService --> GenModel
+  AuthRouter ..> Schemas
+  GamesRouter ..> Schemas
+  GamesWordRouter ..> Schemas
+}
+
+' Connect frontend pages to the backend routers/features (feature mapping)
+HomePage --> GamesRouter
+DailyLearning --> LanguageService
+MemoryGame --> GamesRouter
+Pixey --> GamesWordRouter
+StoryMode --> StoryService
+SignIn --> AuthRouter
+SignUp --> AuthRouter
+
+' Additional features and flows
+PronounceButton --> LanguageService
+ProtectedRoute --> SignIn
+
+' Feature-level relationships (simplified)
+"Frontend" ..> "API / Backend"
+"API / Backend" ..> "Data & External"
+
+@enduml

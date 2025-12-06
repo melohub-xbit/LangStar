@@ -1,0 +1,249 @@
+@startuml Interrupt-Driven Model Architecture Diagram
+skinparam componentStyle uml2
+skinparam backgroundColor #FEFEFE
+skinparam component {
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    BorderThickness 2
+}
+
+title LangStar Interrupt-Driven Model Architecture
+
+' Event Sources (Interrupts)
+package "Event Sources" as EventSources {
+    component [User Interactions] as UserEvents {
+        note right
+            - Button clicks
+            - Form submissions
+            - Voice inputs
+            - Navigation events
+        end note
+    }
+    
+    component [System Events] as SystemEvents {
+        note right
+            - Timer events
+            - Session timeouts
+            - Background tasks
+            - Scheduled jobs
+        end note
+    }
+    
+    component [External Events] as ExternalEvents {
+        note right
+            - API responses
+            - WebSocket messages
+            - Push notifications
+            - Third-party callbacks
+        end note
+    }
+}
+
+' Event Bus / Message Queue
+component [Event Bus] as EventBus {
+    note right
+        - Asynchronous message processing
+        - Event routing and filtering
+        - Priority queuing
+        - Event persistence
+    end note
+}
+
+' Interrupt Handlers (Event Processors)
+package "Interrupt Handlers" as Handlers {
+    component [UI Event Handler] as UIHandler {
+        note right
+            - Process user interface events
+            - Update UI state
+            - Trigger API calls
+            - Handle user feedback
+        end note
+    }
+    
+    component [Auth Event Handler] as AuthHandler {
+        note right
+            - Handle login/logout events
+            - Token refresh interrupts
+            - Session management
+            - Security events
+        end note
+    }
+    
+    component [Game Event Handler] as GameHandler {
+        note right
+            - Process game interactions
+            - Score calculation events
+            - Achievement triggers
+            - Game state updates
+        end note
+    }
+    
+    component [Learning Event Handler] as LearningHandler {
+        note right
+            - Story generation triggers
+            - Progress update events
+            - Language evaluation interrupts
+            - Learning milestone events
+        end note
+    }
+    
+    component [Audio Event Handler] as AudioHandler {
+        note right
+            - Voice recording events
+            - Pronunciation analysis
+            - TTS generation triggers
+            - Audio playback interrupts
+        end note
+    }
+}
+
+' Event Processing Pipeline
+package "Event Processing Pipeline" as Pipeline {
+    component [Event Filter] as EventFilter {
+        note right
+            - Filter relevant events
+            - Event prioritization
+            - Duplicate detection
+            - Rate limiting
+        end note
+    }
+    
+    component [Event Parser] as EventParser {
+        note right
+            - Parse event data
+            - Validate event structure
+            - Extract metadata
+            - Event normalization
+        end note
+    }
+    
+    component [Event Router] as EventRouter {
+        note right
+            - Route events to handlers
+            - Load balancing
+            - Handler selection
+            - Fallback routing
+        end note
+    }
+    
+    component [Event Processor] as EventProcessor {
+        note right
+            - Execute business logic
+            - State management
+            - Error handling
+            - Event chaining
+        end note
+    }
+}
+
+' State Management
+package "State Management" as StateMgmt {
+    component [Application State] as AppState {
+        note right
+            - UI component state
+            - User session state
+            - Game progress state
+            - Learning context state
+        end note
+    }
+    
+    component [Cache State] as CacheState {
+        note right
+            - Temporary data storage
+            - Session data caching
+            - Computed results cache
+            - API response cache
+        end note
+    }
+    
+    component [Persistent State] as PersistentState {
+        note right
+            - Database state
+            - User preferences
+            - Progress data
+            - Achievement data
+        end note
+    }
+}
+
+' Response Generators
+package "Response Generators" as Responses {
+    component [UI Response Generator] as UIResponse {
+        note right
+            - Generate UI updates
+            - Render components
+            - Update DOM
+            - Visual feedback
+        end note
+    }
+    
+    component [API Response Generator] as APIResponse {
+        note right
+            - Generate API responses
+            - Format data
+            - Handle errors
+            - Set headers
+        end note
+    }
+    
+    component [Notification Generator] as NotificationGen {
+        note right
+            - Generate notifications
+            - Push alerts
+            - Achievement messages
+            - System messages
+        end note
+    }
+}
+
+' Event Flow
+UserEvents --> EventBus : User Actions
+SystemEvents --> EventBus : System Triggers
+ExternalEvents --> EventBus : External Signals
+
+EventBus --> EventFilter : Raw Events
+EventFilter --> EventParser : Filtered Events
+EventParser --> EventRouter : Parsed Events
+EventRouter --> UIHandler : UI Events
+EventRouter --> AuthHandler : Auth Events
+EventRouter --> GameHandler : Game Events
+EventRouter --> LearningHandler : Learning Events
+EventRouter --> AudioHandler : Audio Events
+
+' Handler Processing
+UIHandler --> EventProcessor : Process UI Logic
+AuthHandler --> EventProcessor : Process Auth Logic
+GameHandler --> EventProcessor : Process Game Logic
+LearningHandler --> EventProcessor : Process Learning Logic
+AudioHandler --> EventProcessor : Process Audio Logic
+
+' State Interactions
+EventProcessor --> AppState : Update State
+EventProcessor --> CacheState : Cache Data
+EventProcessor --> PersistentState : Persist Data
+
+' Response Generation
+EventProcessor --> UIResponse : Generate UI Updates
+EventProcessor --> APIResponse : Generate API Responses
+EventProcessor --> NotificationGen : Generate Notifications
+
+' Feedback Loop
+UIResponse --> UserEvents : UI Changes Trigger New Events
+APIResponse --> ExternalEvents : API Responses Trigger Events
+NotificationGen --> UserEvents : Notifications Trigger User Actions
+
+' Interrupt Priorities
+note right of EventBus
+    **Event Priorities:**
+    - Critical: Security/Auth failures
+    - High: User interactions
+    - Medium: Background processing
+    - Low: Analytics/Monitoring
+end note
+
+' Asynchronous Processing
+component [Async Worker] as AsyncWorker
+EventBus --> AsyncWorker : Queue Heavy Tasks
+AsyncWorker --> EventBus : Completion Events
+
+@enduml

@@ -1,0 +1,87 @@
+@startuml
+' LangStar - slightly simplified Service-Oriented Architecture
+skinparam componentStyle uml2
+skinparam backgroundColor #FEFEFE
+skinparam component {
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    BorderThickness 2
+}
+title LangStar - Service-Oriented Architecture (Slimmed)
+
+' Service Registry/Discovery
+component "Service Registry" as Registry
+
+' Core Services
+package "Core Services" as CoreServices {
+    component "API Gateway" as APIGateway
+    component "Authentication Service" as AuthService
+    component "User Management Service" as UserService
+}
+
+' Business Services
+package "Business Services" as BusinessServices {
+    component "Story Service" as StoryService
+    component "Language Service" as LanguageService
+    component "Progress Service" as ProgressService
+}
+
+' Supporting Services
+package "Supporting Services" as SupportingServices {
+    component "Notification Service" as NotificationService
+    component "Analytics Service" as AnalyticsService
+    component "Cache Service" as CacheService
+}
+
+' External Adapters
+package "External Adapters" as ExternalAdapters {
+    component "Gemini AI Adapter" as GeminiAdapter
+    component "TTS Adapter" as SarvamAdapter
+    component "Speech Adapter" as SpeechAdapter
+}
+
+' Data Services
+package "Data Services" as DataServices {
+    component "User Data Service" as UserDataService
+    component "Content Data Service" as ContentDataService
+    component "Game Data Service" as GameDataService
+}
+
+' Small helpful note
+note right of APIGateway
+  Routes requests & exposes APIs
+end note
+
+' Service Communication (core flows)
+APIGateway --> AuthService     : Authenticate
+APIGateway --> UserService     : User APIs
+APIGateway --> StoryService    : Story APIs
+APIGateway --> LanguageService : Language APIs
+APIGateway --> ProgressService : Progress APIs
+
+AuthService     --> UserDataService    : User data
+StoryService    --> ContentDataService : Story data
+LanguageService --> GeminiAdapter      : AI generation/eval
+LanguageService --> SarvamAdapter      : TTS
+LanguageService --> SpeechAdapter      : Voice input
+ProgressService --> UserDataService    : Progress storage
+
+' Caching & Analytics (kept explicit)
+CacheService   --> UserDataService    : Cache user data
+CacheService   --> ContentDataService : Cache content
+AnalyticsService --> GameDataService  : Usage metrics
+
+' Registry registrations (grouped)
+Registry --> CoreServices       : register
+Registry --> BusinessServices   : register
+Registry --> SupportingServices : register
+Registry --> DataServices       : register
+Registry --> ExternalAdapters   : register
+
+' Interfaces
+interface "REST API" as REST
+interface "WebSocket" as WS
+APIGateway --> REST : Exposes
+APIGateway --> WS   : Real-time
+
+@enduml

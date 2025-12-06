@@ -71,7 +71,7 @@ Make the .env file with following environment variables
 
 ```
 VITE_SARVAM_API_KEY = "YOUR_SARVAM_API_KEY"
-VITE_API_URL=https://api.sarvam.com
+VITE_API_URL="http://localhost:8000"
 VITE_HF="YOUR_HUGGINGFACE_ACCESS_TOKEN"
 ```
 
@@ -86,3 +86,21 @@ Start the development server
 ```bash
   npm run dev
 ```
+
+### Testing
+
+The project uses `vitest` for robust frontend testing. We verify:
+1.  **Unit Tests**: All key components (DailyLearning, StoryMode, SignUp, etc.) are tested in isolation.
+2.  **State Management**: We ensure user login/logout states are handled correctly.
+3.  **Mocking**: External APIs (Backend, Sarvam, HuggingFace) are mocked to ensure reliable test runs.
+
+**To run the tests:**
+
+1.  Navigate to the frontend directory:
+    ```bash
+    cd frontend
+    ```
+2.  Run the tests:
+    ```bash
+    npx vitest run
+    ```

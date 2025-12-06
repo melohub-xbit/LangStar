@@ -74,3 +74,23 @@ To run the backend locally:
    ```bash
    uvicorn main:app --reload
    ```
+
+### Testing
+
+We use `pytest` for a comprehensive 3-layer testing strategy:
+
+1.  **Unit Tests (`tests/unit`)**: Fast tests that rely on mocks. We test API routes, Database logic, and AI response parsing.
+2.  **Live AI Tests (`tests/live`)**: Integration tests that allow you to verify your Google Gemini API key is working. These tests actually call Google to generate stories and flashcards.
+3.  **Live Database Tests (`tests/live`)**: Verifies that your connection to MongoDB is working by creating and deleting a temporary test user.
+
+**To run the tests:**
+
+1.  **Run Fast Unit Tests** (Recommended for CI/CD):
+    ```bash
+    pytest tests/unit
+    ```
+2.  **Run Live Integration Tests** (Requires `.env` with valid keys):
+    ```bash
+    pytest tests/live
+    ```
+

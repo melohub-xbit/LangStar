@@ -1,0 +1,146 @@
+@startuml Layered Architecture Diagram
+skinparam componentStyle uml2
+skinparam backgroundColor #FEFEFE
+skinparam component {
+    BackgroundColor #FFFFFF
+    BorderColor #000000
+    BorderThickness 2
+}
+
+title LangStar Layered Architecture
+
+' User Layer
+package "User Layer" as UserLayer {
+    actor "Learners" as Learners
+    actor "Administrators" as Admins
+}
+
+' Presentation Layer
+package "Presentation Layer" as Presentation {
+    component [React Frontend] as Frontend
+    component [Vite Build Tool] as Vite
+    component [Tailwind CSS] as TailwindCSS
+    component [Framer Motion] as FramerMotion
+    
+    component [Home Page] as HomePage
+    component [Daily Learning] as DailyLearning
+    component [Memory Game] as MemoryGame
+    component [Story Mode] as StoryMode
+    component [Pixey Features] as Pixey
+    component [Authentication UI] as AuthUI
+    component [Leaderboard] as Leaderboard
+    
+    Frontend --> HomePage
+    Frontend --> DailyLearning
+    Frontend --> MemoryGame
+    Frontend --> StoryMode
+    Frontend --> Pixey
+    Frontend --> AuthUI
+    Frontend --> Leaderboard
+    
+    Vite --> Frontend : builds
+    TailwindCSS --> Frontend : styles
+    FramerMotion --> Frontend : animations
+}
+
+' Application Layer
+package "Application Layer" as Application {
+    component [FastAPI Backend] as Backend
+    component [Auth Router] as AuthRouter
+    component [Games Router] as GamesRouter
+    component [Games Word Router] as GamesWordRouter
+    
+    component [Auth Service] as AuthService
+    component [Story Service] as StoryService
+    component [Language Service] as LanguageService
+    
+    Backend --> AuthRouter
+    Backend --> GamesRouter
+    Backend --> GamesWordRouter
+    
+    AuthRouter --> AuthService
+    GamesRouter --> StoryService
+    GamesRouter --> LanguageService
+    GamesWordRouter --> LanguageService
+}
+
+' Business Logic Layer
+package "Business Logic Layer" as BusinessLogic {
+    component [User Management] as UserMgmt
+    component [Game Logic] as GameLogic
+    component [Story Generation] as StoryGen
+    component [Language Processing] as LangProc
+    component [Progress Tracking] as ProgressTrack
+    
+    AuthService --> UserMgmt
+    StoryService --> StoryGen
+    StoryService --> ProgressTrack
+    LanguageService --> LangProc
+    LanguageService --> ProgressTrack
+    GamesRouter --> GameLogic
+}
+
+' Data Access Layer
+package "Data Access Layer" as DataAccess {
+    component [User Repository] as UserRepo
+    component [Story Repository] as StoryRepo
+    component [Game Repository] as GameRepo
+    component [Progress Repository] as ProgressRepo
+    
+    UserMgmt --> UserRepo
+    StoryGen --> StoryRepo
+    GameLogic --> GameRepo
+    ProgressTrack --> ProgressRepo
+}
+
+' Data Layer
+package "Data Layer" as Data {
+    database "MongoDB" as MongoDB {
+        component [Users Collection] as Users
+        component [Active Stories] as Stories
+        component [Game Sessions] as GameSessions
+        component [Progress Data] as Progress
+    }
+    
+    UserRepo --> Users
+    StoryRepo --> Stories
+    GameRepo --> GameSessions
+    ProgressRepo --> Progress
+}
+
+' Infrastructure Layer
+package "Infrastructure Layer" as Infrastructure {
+    component [Web Server] as WebServer
+    component [Database Server] as DBServer
+    component [Cache Layer] as Cache
+    component [Message Queue] as MQ
+}
+
+' External Services Layer
+package "External Services Layer" as External {
+    component [Google Gemini AI] as Gemini
+    component [Sarvam Text-to-Speech] as Sarvam
+    component [Web Speech API] as WebSpeech
+}
+
+' Communication relationships
+Learners --> Frontend : HTTPS/WebSocket
+Admins --> Frontend : HTTPS
+
+Frontend --> Backend : REST API calls
+Backend --> BusinessLogic : Business Logic
+BusinessLogic --> DataAccess : Data Operations
+DataAccess --> MongoDB : Database queries
+
+StoryGen --> Gemini : AI Content Generation
+LangProc --> Gemini : Language Evaluation
+LangProc --> Sarvam : Pronunciation Audio
+Frontend --> WebSpeech : Voice Recording
+Frontend --> Sarvam : Text-to-Speech
+
+Infrastructure --> Backend : Hosting
+Infrastructure --> MongoDB : Hosting
+Cache --> DataAccess : Caching
+MQ --> BusinessLogic : Async Processing
+
+@enduml

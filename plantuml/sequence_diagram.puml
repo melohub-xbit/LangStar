@@ -1,0 +1,60 @@
+@startuml Sequence Diagram - Story Mode
+actor User
+participant "Frontend" as FE
+participant "Games Router" as Games
+participant "Story Service" as StorySvc
+participant "MongoDB" as DB
+participant "Gemini API" as Gemini
+
+== Start Story ==
+User -> FE: Navigate to Story Mode
+FE -> Games: POST /games/storystart
+note right: Includes username, language
+Games -> StorySvc: generate_and_start_story()
+StorySvc -> DB: Fetch user points
+DB --> StorySvc: User points/level
+StorySvc -> Gemini: Generate 5-part story
+Gemini --> StorySvc: Story JSON
+StorySvc -> DB: Save story to active_stories
+DB --> StorySvc: Story saved
+StorySvc --> Games: First part data
+Games --> FE: Story part 1
+FE --> User: Display story part
+
+== Narrate Each Part ==
+loop For each of 5 parts
+    User -> FE: Read aloud & submit narration
+    FE -> Games: POST /games/storynarrate
+    note right: Includes transcription
+    Games -> StorySvc: save_part_narration()
+    StorySvc -> DB: Fetch active story
+    DB --> StorySvc: Story data
+    StorySvc -> Gemini: Evaluate narration vs original
+    Gemini --> StorySvc: Feedback JSON
+    StorySvc -> DB: Update part with narration & feedback
+    DB --> StorySvc: Updated
+    
+    alt Not last part
+        StorySvc --> Games: Next part + current feedback
+        Games --> FE: Part N+1 + feedback
+        FE --> User: Show feedback + next part
+    else Last part
+        StorySvc -> Gemini: Generate final feedback
+        Gemini --> StorySvc: Final analysis
+        StorySvc -> DB: Delete completed story
+        DB --> StorySvc: Deleted
+        StorySvc --> Games: Completed + final feedback
+        Games --> FE: Story completed
+        FE --> User: Show completion & final feedback
+    end
+end
+
+== Update User Progress ==
+User -> FE: Story completed
+FE -> Games: POST /games/updatescore
+note right: Award points for completion
+Games -> DB: Update user language points
+DB --> Games: Points updated
+Games --> FE: Success
+FE --> User: Progress updated
+@enduml

@@ -1,0 +1,92 @@
+@startuml Activity Diagram - Daily Learning Process (Swimlane)
+|User|
+start
+:Open LangStar app;
+|Frontend|
+if (User authenticated?) then (yes)
+    :Display Home Page;
+else (no)
+    :Show Sign In page;
+    |User|
+    :Enter credentials;
+    |Frontend|
+    :Validate input;
+    :Send login request;
+    |Backend API|
+    :Receive /auth/login request;
+    :Verify credentials;
+    |Database|
+    :Query user data;
+    |Backend API|
+    if (Credentials valid?) then (yes)
+        :Generate JWT token;
+        :Return success + token;
+        |Frontend|
+        :Store token;
+        :Display Home Page;
+    else (no)
+        :Return error;
+        |Frontend|
+        :Show error message;
+        stop
+    endif
+endif
+
+|User|
+:Navigate to Daily Learning;
+|Frontend|
+:Send /games_word/dailies request;
+note right: Includes username, language
+|Backend API|
+:Receive request;
+:Extract user info;
+|Database|
+:Fetch user points for language;
+|Backend API|
+:Determine user level;
+:Call generate_dailies();
+|External API|
+:Gemini generates 10 flashcards;
+note right: Based on language & level
+|Backend API|
+:Receive flashcards data;
+:Return dailies to frontend;
+|Frontend|
+:Display first flashcard;
+|User|
+:View word/concept;
+:Click pronounce button;
+|Frontend|
+:Send text to Sarvam API;
+|External API|
+:Sarvam generates audio;
+|Frontend|
+:Play pronunciation audio;
+|User|
+:Practice pronunciation;
+:Click next/check button;
+|Frontend|
+repeat
+    :Show next flashcard;
+    |User|
+    :Study and practice;
+repeat while (More flashcards?)
+
+|User|
+:Complete all dailies;
+|Frontend|
+:Send /games/updatescore request;
+note right: Award points for completion
+|Backend API|
+:Receive score update;
+|Database|
+:Update user language points;
+|Backend API|
+:Return success;
+|Frontend|
+:Show completion message;
+:Update progress display;
+|User|
+:View updated progress;
+stop
+@enduml

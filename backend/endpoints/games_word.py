@@ -3,6 +3,7 @@ from basemodels.allpydmodels import *
 from utils.all_helper import *
 from utils.story_helper import *
 from database import *
+import traceback
 
 router = APIRouter()
 
@@ -18,8 +19,10 @@ async def dailies(info_dict: InfoDict):
         return {
             "dailies": dailies_data
         }
-    except:
-        print("Error generating dailies")
+    except Exception as e:
+        print(f"Error generating dailies: {e}")
+        traceback.print_exc()
+        return {"dailies": {"cards": []}}
 
 @router.post("/memorypairs")
 async def memory_pairs(info_dict: InfoDict):
@@ -33,7 +36,9 @@ async def memory_pairs(info_dict: InfoDict):
         return {
             "words": pairs_data
         }
-    except:
+    except Exception as e:
+        print(f"Error generating memory pairs: {e}")
+        traceback.print_exc()
         return {
             "pairs": []
         }

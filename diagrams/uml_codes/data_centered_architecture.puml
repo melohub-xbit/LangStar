@@ -1,0 +1,69 @@
+@startuml
+' LangStar - very simplified Data-Centered Architecture
+skinparam componentStyle uml2
+skinparam backgroundColor #FEFEFE
+skinparam component {
+  BackgroundColor #FFFFFF
+  BorderColor #000000
+  BorderThickness 2
+}
+title LangStar - Data-Centered Architecture 
+
+' Central Data Hub
+database "MongoDB Data Hub" as DataHub
+
+note right of DataHub
+  Stores: users, stories, sessions, progress
+end note
+
+' Producers (grouped)
+package "Producers" {
+  component "User Registration" as UserReg
+  component "Story Generator"  as StoryGen
+  component "Game Engine"      as GameEngine
+
+  UserReg --> DataHub : write
+  StoryGen --> DataHub : write
+  GameEngine --> DataHub : write
+}
+
+' Consumers (grouped)
+package "Consumers" {
+  component "Auth / User Service"  as UserSvc
+  component "Story / Content Service" as StorySvc
+  component "Game Service"        as GameSvc
+  component "Analytics"           as Analytics
+
+  UserSvc  --> DataHub : read / update
+  StorySvc --> DataHub : read / update
+  GameSvc  --> DataHub : read
+  Analytics --> DataHub : aggregate
+}
+
+' Controllers
+package "Controllers" {
+  component "API Gateway"  as APIGateway
+  component "Data Access Layer" as DAL
+
+  APIGateway --> DAL : route requests
+  DAL --> DataHub     : CRUD
+}
+
+' External feeds (minimal)
+package "External Feeds" {
+  component "AI Content"  as AIContent
+  component "TTS / Audio" as TTS
+  AIContent --> StoryGen : content
+  TTS       --> StoryGen : audio
+}
+
+' Monitoring / Backup
+component "Monitoring & Backup" as Monitor
+Monitor --> DataHub : monitor / backup
+
+' High-level arrows to show flow
+APIGateway --> UserSvc
+APIGateway --> StorySvc
+APIGateway --> GameSvc
+
+@enduml

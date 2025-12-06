@@ -11,11 +11,12 @@ function HomePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       fetch(`${import.meta.env.VITE_API_URL}/health`).then((response) =>
         response.json()
       );
     }, 100000);
+    return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {

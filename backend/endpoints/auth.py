@@ -3,13 +3,38 @@ from basemodels.allpydmodels import *
 from database import *
 from utils.all_helper import *
 from utils.story_helper import *
+import hashlib
 
 router = APIRouter()
 
 @router.post("/login")
 async def login(user_data: UserLogin):
     user = users_collection.find_one({"username": user_data.username})
-    if user and pwd_context.verify(user_data.password, user["password"]):
+    password_valid = False
+    migrated = False
+
+    if user:
+        # Pre-hash with SHA256 to support long passwords and handle migration
+        input_hash = hashlib.sha256(user_data.password.encode('utf-8')).hexdigest()
+        
+        # Try verifying with new method (SHA256 pre-hash)
+        if verify_password(input_hash, user["password"]):
+            password_valid = True
+        # Fallback: Try verifying with legacy method (raw password) if length permits
+        elif len(user_data.password.encode('utf-8')) <= 72:
+            try:
+                if verify_password(user_data.password, user["password"]):
+                    password_valid = True
+                    # Migrate to new method
+                    new_hashed = get_password_hash(input_hash)
+                    users_collection.update_one(
+                        {"_id": user["_id"]}, 
+                        {"$set": {"password": new_hashed}}
+                    )
+            except Exception:
+                pass # Fallback failed or error during legacy check
+
+    if password_valid:
         access_token = create_access_token(
             data={"sub": user_data.username}
         )
@@ -32,10 +57,16 @@ async def register(user_data: UserRegister):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Username already exists"
         )
+    
+    # 2025-UPDATE: Pre-hash password with SHA256 to bypass bcrypt 72-byte limit
+    # This allows passwords of any length to be securely stored.
+    sha256_password = hashlib.sha256(user_data.password.encode('utf-8')).hexdigest()
+    hashed_password = get_password_hash(sha256_password)
+    
     access_token = create_access_token(
         data={"sub": user_data.username}
     )
-    hashed_password = pwd_context.hash(user_data.password)
+
     users_collection.insert_one({
         "username": user_data.username,
         "password": hashed_password,

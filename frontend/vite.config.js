@@ -6,10 +6,24 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: import.meta.env.VITE_API_URL,
+        target: process.env.VITE_API_URL || 'http://localhost:8000', // Fallback for tests
         changeOrigin: true,
         secure: false
       }
     }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        silenceDeprecations: ["legacy-js-api"],
+      },
+    },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.js',
+    css: true,
+    exclude: ['node_modules', 'tests/**'],
   }
 })
