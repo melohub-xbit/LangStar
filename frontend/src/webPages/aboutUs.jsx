@@ -30,20 +30,7 @@ function AboutUs() {
               </p>
             </div>
 
-            {/* Story Section */}
-            <div className="bg-neutral-200/85 rounded-lg shadow-lg p-8 mb-8">
-              <h2 className="text-2xl font-semibold text-blue-800 mb-4">
-                Our Story
-              </h2>
-              <p className="text-gray-900">
-                Founded in 2023, Language Learning Adventure was born from a
-                simple idea: learning a new language should be as enjoyable as
-                playing your favorite game. Our team of language experts,
-                educators, and game developers came together to create an
-                innovative platform.
-              </p>
-            </div>
-
+            
             {/* Features Section */}
             <div className="bg-neutral-200/85 rounded-lg shadow-lg p-8 mb-8">
               <h2 className="text-2xl font-semibold text-blue-800 mb-4">
@@ -74,32 +61,6 @@ function AboutUs() {
                   </div>
                 ))}
               </div>
-            </div>
-
-            {/* Team Section */}
-            <div className="bg-neutral-200/85 rounded-lg shadow-lg p-8 mb-8">
-              <h2 className="text-2xl font-semibold text-blue-800 mb-4">
-                Our Team
-              </h2>
-              <p className="text-gray-900">
-                We are a diverse group of language enthusiasts, educators, and
-                tech innovators working together to revolutionize language
-                learning. Our team spans multiple countries and cultures,
-                bringing authentic expertise to your learning experience.
-              </p>
-            </div>
-
-            {/* Contact Section */}
-            <div className="bg-neutral-200/85 rounded-lg shadow-lg p-8">
-              <h2 className="text-2xl font-semibold text-blue-800 mb-4">
-                Get in Touch
-              </h2>
-              <p className="text-gray-900 mb-6">
-                Have questions or suggestions? We would love to hear from you!
-              </p>
-              <button className="bg-blue-800/85 text-white px-8 py-3 rounded-lg hover:bg-blue-700/80 transition duration-300">
-                Contact Us
-              </button>
             </div>
           </div>
         </div>

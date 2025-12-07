@@ -5,7 +5,11 @@
 
 
 ## About the Project
-**LangStar** is a language learning platform designed with a pixel art aesthetic, aimed at making language acquisition fun and interactive. This project was developed using **React** and **Tailwind CSS**, leveraging **Sarvam API** for text-to-speech translation, and **Framer Motion** for smooth animations. LangStar provides a variety of features, including story mode exercises, pronunciation checks, a memory game, and progress tracking, all while adapting to the user's chosen language.
+**LangStar** is a comprehensive language learning platform designed with a captivating pixel art aesthetic to make language acquisition fun and interactive.
+
+**Frontend:** Developed using **React** and **Tailwind CSS**, the application features **Framer Motion** for smooth, engaging animations and integrates **Sarvam API** for high-quality text-to-speech capabilities. The interface provides an immersive experience with features like story mode exercises, interactive pronunciation checks, memory games, and real-time progress tracking.
+
+**Backend:** Powering the application is a robust **FastAPI** backend that manages user interactions, gamification logic, and data storage. Integrated with **MongoDB** (via pymongo), it securely handles user progress, leaderboards, and dynamic language content, ensuring a seamless and responsive learning experience across all features.
 
 ## Badges
 
@@ -14,6 +18,12 @@
 ![Web Speech API](https://img.shields.io/badge/Web%20Speech%20API-Enabled-brightgreen?logo=googlechrome&logoColor=white)
 ![Sarvam API](https://img.shields.io/badge/Sarvam%20API-Integration-blueviolet)
 ![Framer Motion](https://img.shields.io/badge/Framer%20Motion-Animations%20Enabled-%23ff69b4?logo=framer&logoColor=white)
+
+[![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![Python](https://img.shields.io/badge/python-3.9+-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org)
+[![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Gemini](https://img.shields.io/badge/Gemini_AI-8E75B2?style=for-the-badge&logo=google&logoColor=white)](https://gemini.google.com/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)](https://makeapullrequest.com)
 
 
 ## Features
@@ -45,28 +55,32 @@ The website theme changes based on the selected language, creating an immersive 
 7. **User Authentication**:
  Supports login and signup for personalized access to progress, scores, and settings.
 
-8. **About Us Page**:
-Information about the creators, purpose, and technology behind LangStar.
-
 ## Tech Stack
 - **Frontend**: React, Tailwind CSS
-- **Text and Speech APIs**: Sarvam API (for text-to-speech functionality), Web Speech API (for speech-to-text and text-to-speech functionalities)
-- **Animation**: Framer Motion (for smooth transitions and animations)
+- **Backend**: FastAPI, Python
+- **Database**: MongoDB
+- **AI & APIs**: 
+  - Sarvam API (Text-to-Speech)
+  - Web Speech API (Browser-native Speech recognition)
+  - Google Gemini AI (Generative content & feedback)
+- **Animation**: Framer Motion
 
 ## Getting Started
 ### Prerequisites
-- Ensure **Node.js** and **npm** are installed.
+- **Frontend**: Ensure **Node.js** and **npm** are installed.
+- **Backend**: Ensure **Python 3.9+** is installed.
 
 ### Installation
 Clone the repository:
    ```bash
-   git clone https://github.com/melohub-xbit/SE_Project_Alps.git
+   git clone https://github.com/melohub-xbit/LangStar.git
    ```
 Go to the project directory
 
 ```bash
   cd LangStar
 ```
+## Frontend setup
 Make the .env file with following environment variables
 
 ```
@@ -87,7 +101,7 @@ Start the development server
   npm run dev
 ```
 
-### Testing
+### Frontend Testing
 
 The project uses `vitest` for robust frontend testing. We verify:
 1.  **Unit Tests**: All key components (DailyLearning, StoryMode, SignUp, etc.) are tested in isolation.
@@ -104,3 +118,38 @@ The project uses `vitest` for robust frontend testing. We verify:
     ```bash
     npx vitest run
     ```
+
+## Backend setup
+To run the backend locally:
+
+1. Navigate to the backend directory of the repo, install Python and the required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+1.1. Make the .env file with the required environment variables, as specified in the `.env.example` file.
+2. Run the application:
+   ```bash
+   uvicorn main:app --reload
+   ```
+
+### Backend Testing
+
+We use `pytest` for a comprehensive 3-layer testing strategy:
+
+1.  **Unit Tests (`tests/unit`)**: Fast tests that rely on mocks. We test API routes, Database logic, and AI response parsing.
+2.  **Live AI Tests (`tests/live`)**: Integration tests that allow you to verify your Google Gemini API key is working. These tests actually call Google to generate stories and flashcards.
+3.  **Live Database Tests (`tests/live`)**: Verifies that your connection to MongoDB is working by creating and deleting a temporary test user.
+
+**To run the tests:**
+
+1.  **Run Fast Unit Tests** (Recommended for CI/CD):
+    ```bash
+    cd backend
+    pytest tests/unit
+    ```
+2.  **Run Live Integration Tests** (Requires `.env` with valid keys):
+    ```bash
+    cd backend
+    pytest tests/live
+    ```
+
